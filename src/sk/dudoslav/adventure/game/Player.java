@@ -46,11 +46,11 @@ public class Player {
     }
 
     public int getZoneX(){
-        return Math.round(x / Zone.WIDTH);
+        return (int)(x / Zone.WIDTH);
     }
 
     public int getZoneY(){
-        return Math.round(z / Zone.HEIGHT);
+        return (int)(z / Zone.HEIGHT);
     }
 
     public void update(Input i){

@@ -15,7 +15,7 @@ public class VisibleZoneManager {
     private Zone zones[][] = new Zone[wtrd][wtrd];
     private ZoneRenderer zr = new ZoneRenderer();
 
-    private int lpx,lpz;
+    private int lpx = -100,lpz = -100;
     private boolean sr = true;
 
     public void update(Player p, World w){
@@ -24,6 +24,8 @@ public class VisibleZoneManager {
 
         lpx = p.getZoneX();
         lpz = p.getZoneY();
+
+        System.out.println(p.getZoneX()+":"+p.getZoneY());
 
         for(int y = 0; y < wtrd; y++){
             for(int x = 0; x < wtrd; x++){
