@@ -49,7 +49,7 @@ public class Zone {
     }
 
     public float getPointAt(int x, int y){
-        if(x > 0 && x < WIDTH && y > 0 && y < HEIGHT) return ps[x][y];
+        if(x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) return ps[x][y];
         return 0;
     }
 }

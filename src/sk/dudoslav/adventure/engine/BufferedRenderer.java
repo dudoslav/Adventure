@@ -67,7 +67,7 @@ public class BufferedRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, cbo);
         glColorPointer(3, GL_FLOAT, 0, 0);
 
-        glDrawArrays(GL_LINES, 0, count * 3);
+        glDrawArrays(GL_TRIANGLES, 0, count * 3);
 
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);

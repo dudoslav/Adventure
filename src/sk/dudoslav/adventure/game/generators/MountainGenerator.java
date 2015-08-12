@@ -16,8 +16,8 @@ public class MountainGenerator extends Generator{
         SimplexOctaveGenerator sog = new SimplexOctaveGenerator(r,16);
         sog.setScale(1 / 512.f);
 
-        addGeneratorComponent(new FlatTerrainGeneratorComponent());
-        //addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,10));
+        //addGeneratorComponent(new FlatTerrainGeneratorComponent());
+        addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,50));
         /*addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
         //addGeneratorComponent(new SmoothTerrainGeneratorComponent());*/
     }
