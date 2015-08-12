@@ -6,7 +6,7 @@ import sk.dudoslav.adventure.engine.*;
 import sk.dudoslav.adventure.game.Player;
 import sk.dudoslav.adventure.game.VisibleZoneManager;
 import sk.dudoslav.adventure.game.World;
-import sk.dudoslav.adventure.game.renderers.ZoneRenderer;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.FloatBuffer;
 
@@ -27,6 +27,7 @@ public class InGameState extends GameState {
     private FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 
     private BufferedRenderer br = new BufferedRenderer();
+    private Light l = new Light(0);
 
     private Player p = new Player();
 
@@ -34,35 +35,29 @@ public class InGameState extends GameState {
     private World w = new World();
 
     private void initLighting(){
-        FloatBuffer ambientLightColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.1f, 0.0f, 1.0f});
-        FloatBuffer specularLight = BufferUtils.createFloatBuffer(4).put(new float[]{1.f, 1.f, 1.f, 1.f});
-        FloatBuffer lightColor0 = BufferUtils.createFloatBuffer(4).put(new float[]{0.8f, 0.8f, 0.8f, 1.f});
-        FloatBuffer lightPos0 = BufferUtils.createFloatBuffer(4).put(new float[]{0.f, 5.f, 0.f, 1.0f});
 
-        ambientLightColor.flip();
-        specularLight.flip();
-        lightColor0.flip();
-        lightPos0.flip();
+        l.createDirectionalLight();
+
+        FloatBuffer ambientColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.2f, 0.0f, 1.0f});
+        ambientColor.flip();
 
         glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
 
         glShadeModel(GL_SMOOTH);
         glEnable(GL_NORMALIZE);
         glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
         glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
         glEnable(GL_COLOR_MATERIAL);
-        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLightColor);
-        glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
-        glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-        glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
         glColorMaterial(GL_FRONT, GL_DIFFUSE);
 
-        glLoadIdentity();
+        l.enable();
+
         glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
     }
 
     @Override
@@ -75,8 +70,12 @@ public class InGameState extends GameState {
 
     @Override
     public void update(GameStatesManager gsm, Input i) {
+        if(i.isKeyDown(GLFW_KEY_UP))    l.addPosDir(0f,0f,0.2f);
+        if(i.isKeyDown(GLFW_KEY_DOWN))  l.addPosDir(0f,0f,-0.2f);
+        if(i.isKeyDown(GLFW_KEY_LEFT))  l.addPosDir(0.2f,0f,0f);
+        if(i.isKeyDown(GLFW_KEY_RIGHT)) l.addPosDir(-0.2f,0f,0f);
         p.update(i);
-        vzm.update(p,w);
+        vzm.update(p, w);
     }
 
     @Override
@@ -90,6 +89,8 @@ public class InGameState extends GameState {
                      0.0f, 1.0f, 0.0f).rotate(p.getRx(), 1f, 0f, 0f).rotate(p.getRy(), 0f, 1f, 0f).translate(p.getX(),p.getY(),p.getZ()).get(fb);
         glMatrixMode(GL_MODELVIEW);
         glLoadMatrixf(fb);
+
+        l.updatePosDir();
 
         if(vzm.shouldRender(p)){
             System.out.println("RENDERING!");

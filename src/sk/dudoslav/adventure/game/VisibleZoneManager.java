@@ -25,8 +25,6 @@ public class VisibleZoneManager {
         lpx = p.getZoneX();
         lpz = p.getZoneY();
 
-        System.out.println(p.getZoneX()+":"+p.getZoneY());
-
         for(int y = 0; y < wtrd; y++){
             for(int x = 0; x < wtrd; x++){
                 zones[x][y] = w.loadOrGenerateZone(p.getZoneX()+x-trd-1,p.getZoneY()+y-trd-1);
