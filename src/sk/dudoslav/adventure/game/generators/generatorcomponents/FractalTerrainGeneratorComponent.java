@@ -20,7 +20,6 @@ public class FractalTerrainGeneratorComponent extends GeneratorComponent {
 
     @Override
     public void generate(Zone z) {
-        //diamondStep(0,0,Zone.WIDTH-1,0,Zone.WIDTH-1,Zone.HEIGHT-1,0,Zone.HEIGHT-1,80f,z,11);
         diamondStep(2,2,Zone.WIDTH-3,2,Zone.WIDTH-3,Zone.HEIGHT-3,2,Zone.HEIGHT-3,80f,z, iter);
     }
 

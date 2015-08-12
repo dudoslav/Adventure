@@ -11,7 +11,7 @@ public class FlatTerrainGeneratorComponent extends GeneratorComponent {
     public void generate(Zone z) {
         for (int y = 0; y < Zone.HEIGHT; y++){
             for (int x = 0; x < Zone.WIDTH; x++){
-                z.setPointAt(x,y,0);
+                z.setPointAt(x,y,3);
             }
         }
     }

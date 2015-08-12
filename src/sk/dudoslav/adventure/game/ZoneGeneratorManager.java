@@ -17,7 +17,7 @@ public class ZoneGeneratorManager {
 
     public ZoneGeneratorManager(){
         g.add(new MountainGenerator());
-        g.add(new RandomFlatGenerator());
+        //g.add(new RandomFlatGenerator());
     }
 
     public Zone generateZone(int x, int y){

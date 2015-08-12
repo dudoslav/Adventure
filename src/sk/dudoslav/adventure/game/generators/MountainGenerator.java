@@ -1,7 +1,7 @@
 package sk.dudoslav.adventure.game.generators;
 
-import sk.dudoslav.adventure.game.Zone;
 import sk.dudoslav.adventure.game.generators.generatorcomponents.*;
+import sk.dudoslav.adventure.game.generators.noise.SimplexOctaveGenerator;
 
 import java.util.Random;
 
@@ -11,12 +11,15 @@ import java.util.Random;
 public class MountainGenerator extends Generator{
 
     public MountainGenerator(){
+        setColor(0.58f,0.58f,0.58f);
         Random r = new Random();
+        SimplexOctaveGenerator sog = new SimplexOctaveGenerator(r,16);
+        sog.setScale(1 / 512.f);
+
         addGeneratorComponent(new FlatTerrainGeneratorComponent());
-        //addGeneratorComponent(new RandomTerrainGeneratorComponent(r.nextFloat()*2+1));
-        //addGeneratorComponent(new DudHillGeneratorComponent(r.nextFloat()*30));
-        addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
-        //addGeneratorComponent(new SmoothTerrainGeneratorComponent());
+        //addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,10));
+        /*addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
+        //addGeneratorComponent(new SmoothTerrainGeneratorComponent());*/
     }
 
 }

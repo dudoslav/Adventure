@@ -38,7 +38,7 @@ public class InGameState extends GameState {
 
         l.createDirectionalLight();
 
-        FloatBuffer ambientColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.2f, 0.0f, 1.0f});
+        FloatBuffer ambientColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.0f, 0.0f, 1.0f});
         ambientColor.flip();
 
         glMatrixMode(GL_PROJECTION);
@@ -94,7 +94,6 @@ public class InGameState extends GameState {
 
         if(vzm.shouldRender(p)){
             System.out.println("RENDERING!");
-            glColor3f(0f, 1f, 0f);
             br.reset();
             vzm.render(br);
             br.uploadToGPU();

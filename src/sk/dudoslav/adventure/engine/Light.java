@@ -28,7 +28,7 @@ public class Light {
         y = 1f;
         z = 0.5f;
 
-        ambientLightColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.2f, 0.0f, 1.0f});
+        ambientLightColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.1f, 0.1f, 0.1f, 1.0f});
         specularLight = BufferUtils.createFloatBuffer(4).put(new float[]{1.f, 1.f, 1.f, 1.f});
         lightColor0 = BufferUtils.createFloatBuffer(4).put(new float[]{0.8f, 0.8f, 0.8f, 1.f});
         lightPos0 = BufferUtils.createFloatBuffer(4).put(new float[]{x, y, z, 0.0f});

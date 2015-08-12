@@ -8,11 +8,11 @@ import static org.lwjgl.glfw.GLFW.*;
  * Created by dusan on 10.08.2015.
  */
 public class Player {
-    public static final float SPEED = 3f;
+    public static final float SPEED = 0.5f;
 
-    private float x = 256f;
-    private float y = 64f;
-    private float z = 256f;
+    private float x = 0f;
+    private float y = 0f;
+    private float z = 0f;
 
     private float rx = 0f;
     private float ry = 0f;
@@ -66,6 +66,8 @@ public class Player {
 
         lx = i.getMouseX();
         ly = i.getMouseY();
+
+        System.out.println("Player: ["+getX()+";"+getY()+";"+getZ()+"]");
     }
 
     private void move(float x, float y, float z){
