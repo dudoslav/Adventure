@@ -17,7 +17,7 @@ public class MountainGenerator extends Generator{
         sog.setScale(1 / 512.f);
 
         //addGeneratorComponent(new FlatTerrainGeneratorComponent());
-        addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,50));
+        addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,100));
         /*addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
         //addGeneratorComponent(new SmoothTerrainGeneratorComponent());*/
     }

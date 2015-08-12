@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * Created by dusan on 10.08.2015.
  */
 public class Player {
-    public static final float SPEED = 0.5f;
+    public static final float SPEED = 3f;
 
     private float x = 0f;
     private float y = 0f;

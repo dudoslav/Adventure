@@ -5,8 +5,8 @@ package sk.dudoslav.adventure.game;
  */
 public class Zone {
 
-    public static final int WIDTH  = 256;
-    public static final int HEIGHT = 256;
+    public static final int WIDTH  = 128;
+    public static final int HEIGHT = 128;
 
     public int getOffsetX() {
         return offsetX;
