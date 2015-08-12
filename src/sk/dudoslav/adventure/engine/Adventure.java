@@ -34,9 +34,11 @@ public class Adventure {
             init();
             loop();
 
+            gsm.dispose();
             glfwDestroyWindow(window);
         } catch (Exception e) {
             System.out.println("Something went wrong! -> "+e.getMessage());
+            e.printStackTrace();
         } finally {
             glfwTerminate();
             errorCallback.release();

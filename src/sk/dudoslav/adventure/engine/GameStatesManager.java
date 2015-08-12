@@ -26,11 +26,17 @@ public class GameStatesManager {
 
     public void enterState(int ID){
         cgs = gss.get(ID);
-        cgs.init(this,p);
+        cgs.init(this, p);
     }
 
     public void addState(GameState gs){
         gss.add(gs);
+    }
+
+    public void dispose(){
+        for (GameState gs : gss){
+            gs.dispose();
+        }
     }
 
 }

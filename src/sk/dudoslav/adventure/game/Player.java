@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * Created by dusan on 10.08.2015.
  */
 public class Player {
-    public static final float SPEED = 0.5f;
+    public static final float SPEED = 3f;
 
     private float x = 256f;
     private float y = 64f;
@@ -43,6 +43,14 @@ public class Player {
 
     public float getZ() {
         return -z;
+    }
+
+    public int getZoneX(){
+        return Math.round(x / Zone.WIDTH);
+    }
+
+    public int getZoneY(){
+        return Math.round(z / Zone.HEIGHT);
     }
 
     public void update(Input i){

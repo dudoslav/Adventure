@@ -1,7 +1,6 @@
 package sk.dudoslav.adventure.engine;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.Sys;
 
 import java.nio.FloatBuffer;
 
@@ -13,8 +12,7 @@ import static org.lwjgl.opengl.GL15.*;
  */
 public class BufferedRenderer {
     public static final int VERTEX_DIMENSIONS = 3;
-    public static final int NORMAL_DIMENSIONS = 3;
-    public static final int BUFFER_SIZE = 0x2000000;
+    public static final int BUFFER_SIZE = 0x2000000*2;
 
     FloatBuffer v = BufferUtils.createFloatBuffer(BUFFER_SIZE);
     FloatBuffer n = BufferUtils.createFloatBuffer(BUFFER_SIZE);

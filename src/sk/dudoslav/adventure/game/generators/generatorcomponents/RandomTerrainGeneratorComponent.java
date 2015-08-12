@@ -18,8 +18,8 @@ public class RandomTerrainGeneratorComponent extends GeneratorComponent {
     @Override
     public void generate(Zone z) {
         Random r = new Random();
-        for (int y = 0; y < Zone.HEIGHT; y++){
-            for (int x = 0; x < Zone.WIDTH; x++){
+        for (int y = 1; y < Zone.HEIGHT-1; y++){
+            for (int x = 1; x < Zone.WIDTH-1; x++){
                 z.setPointAt(x,y,r.nextFloat()*h);
             }
         }

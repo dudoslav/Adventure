@@ -26,14 +26,16 @@ public class DudHillGeneratorComponent extends GeneratorComponent {
         for (int y = 1; y < my; y++){
             for (int x = 1; x < mx; x++){
                 a = (z.getPointAt(x,y)+z.getPointAt(x-1,y)+z.getPointAt(x,y-1)+z.getPointAt(x-1,y-1)) / 4;
-
                 z.setPointAt(x,y,(float)(a+((Math.sqrt(Math.pow(x,2)+Math.pow(y,2))*mh)/mx)));
 
-                z.setPointAt(x+256,y,(float)(a+((Math.sqrt(Math.pow(256-x,2)+Math.pow(y,2))*mh)/mx)));
+                a = (z.getPointAt((int)(x+mx),y)+z.getPointAt((int)(x+mx-1),y)+z.getPointAt((int)(x+mx),y-1)+z.getPointAt((int)(x+mx-1),y-1)) / 4;
+                z.setPointAt((int)(x+mx),y,(float)(a+((Math.sqrt(Math.pow(mx-x,2)+Math.pow(y,2))*mh)/mx)));
 
-                z.setPointAt(x+256,y+256,(float)(a+((Math.sqrt(Math.pow(x,2)+Math.pow(y,2))*mh)/mx)));
+                a = (z.getPointAt(x,y)+z.getPointAt(x-1,y)+z.getPointAt(x,y-1)+z.getPointAt(x-1,y-1)) / 4;
+                z.setPointAt((int)(x+mx),(int)(y+my),(float)(a+((Math.sqrt(Math.pow(mx-x,2)+Math.pow(my-y,2))*mh)/mx)));
 
-                z.setPointAt(x,y+256,(float)(a+((Math.sqrt(Math.pow(x,2)+Math.pow(y,2))*mh)/mx)));
+                a = (z.getPointAt(x,y)+z.getPointAt(x-1,y)+z.getPointAt(x,y-1)+z.getPointAt(x-1,y-1)) / 4;
+                z.setPointAt(x,(int)(y+my),(float)(a+((Math.sqrt(Math.pow(x,2)+Math.pow(my-y,2))*mh)/mx)));
             }
         }
     }

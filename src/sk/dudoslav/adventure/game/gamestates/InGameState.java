@@ -4,13 +4,12 @@ import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import sk.dudoslav.adventure.engine.*;
 import sk.dudoslav.adventure.game.Player;
-import sk.dudoslav.adventure.game.WorldGeneratorManager;
-import sk.dudoslav.adventure.game.Zone;
+import sk.dudoslav.adventure.game.VisibleZoneManager;
+import sk.dudoslav.adventure.game.World;
 import sk.dudoslav.adventure.game.renderers.ZoneRenderer;
 
 import java.nio.FloatBuffer;
 
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -25,14 +24,14 @@ public class InGameState extends GameState {
     private Matrix4f pm = new Matrix4f(); //ProjectionMatrix
     private Matrix4f vm = new Matrix4f(); //ViewMatrix
 
-    FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+    private FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 
-    BufferedRenderer vbo = new BufferedRenderer();
+    private BufferedRenderer br = new BufferedRenderer();
 
-    Zone zone;
-    ZoneRenderer zr = new ZoneRenderer();
+    private Player p = new Player();
 
-    Player p = new Player();
+    private VisibleZoneManager vzm = new VisibleZoneManager();
+    private World w = new World();
 
     private void initLighting(){
         FloatBuffer ambientLightColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.1f, 0.0f, 1.0f});
@@ -71,15 +70,13 @@ public class InGameState extends GameState {
         width  = p.getWidth();
         height = p.getHeight();
 
-        WorldGeneratorManager wgm = new WorldGeneratorManager();
-
-        zone = wgm.generateZone();
         initLighting();
     }
 
     @Override
     public void update(GameStatesManager gsm, Input i) {
         p.update(i);
+        vzm.update(p,w);
     }
 
     @Override
@@ -94,19 +91,18 @@ public class InGameState extends GameState {
         glMatrixMode(GL_MODELVIEW);
         glLoadMatrixf(fb);
 
-        vbo.reset();
-
-        glColor3f(0f,1f,0f);
-
-        zr.render(zone, vbo);
-
-        vbo.uploadToGPU();
-        vbo.draw();
-
+        if(vzm.shouldRender(p)){
+            System.out.println("RENDERING!");
+            glColor3f(0f, 1f, 0f);
+            br.reset();
+            vzm.render(br);
+            br.uploadToGPU();
+        }
+        br.draw();
     }
 
     @Override
     public void dispose() {
-
+        br.dispose();
     }
 }
