@@ -8,12 +8,11 @@ import sk.dudoslav.adventure.game.renderers.ZoneRenderer;
  * Created by dusan on 11.08.2015.
  */
 public class VisibleZoneManager {
-    private int trd = 6; //TODO: dorobit s properties --> toto je tile render distance
+    private int trd = 3; //TODO: dorobit s properties --> toto je tile render distance
     private int wtrd = trd*2+1;
 
     private VisibleZone vz = new VisibleZone(wtrd);
     private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
-    //private ZoneRenderer zr = new ZoneRenderer();
 
     private int lpx = -100,lpz = -100;
     private boolean sr = true;
@@ -36,11 +35,6 @@ public class VisibleZoneManager {
 
     public void render(BufferedRenderer br){
         vzr.render(br,vz);
-        /*for(int y = 0; y < wtrd; y++){
-            for(int x = 0; x < wtrd; x++){
-                zr.render(vz.getZone(x,y),br);
-            }
-        }*/
     }
 
     public boolean shouldRender(Player p){

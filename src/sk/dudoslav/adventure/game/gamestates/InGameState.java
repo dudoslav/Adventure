@@ -11,6 +11,8 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
 
 /**
  * Created by dusan on 09.08.2015.
@@ -28,6 +30,9 @@ public class InGameState extends GameState {
 
     private BufferedRenderer br = new BufferedRenderer();
     private Light l = new Light(0);
+    private Material m = new Material();
+    private TextureManager tm = new TextureManager(3);
+    private ShaderManager sm = new ShaderManager();
 
     private Player p = new Player();
 
@@ -38,38 +43,64 @@ public class InGameState extends GameState {
 
         l.createDirectionalLight();
 
-        FloatBuffer ambientColor = BufferUtils.createFloatBuffer(4).put(new float[]{0.0f, 0.0f, 0.0f, 1.0f});
-        ambientColor.flip();
-
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        glShadeModel(GL_SMOOTH);
         glEnable(GL_NORMALIZE);
-        glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-        glEnable(GL_LIGHTING);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
-        glEnable(GL_COLOR_MATERIAL);
-        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-        glColorMaterial(GL_FRONT, GL_DIFFUSE);
 
         l.enable();
+        m.apply();
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }
 
-    @Override
-    public void init(GameStatesManager gsm, AdventureProperties p) {
-        width  = p.getWidth();
-        height = p.getHeight();
+    private void uploadTexturesToGPU(AdventureContainer ac){
 
-        initLighting();
+        //glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
+
+        tm.activateTexture(0);
+        tm.bindTexture(0);
+        tm.loadTexture(0, ac.getResources().getGrass());
+
+        tm.activateTexture(1);
+        tm.bindTexture(1);
+        tm.loadTexture(1,ac.getResources().getDirt_grass());
+
+        tm.activateTexture(2);
+        tm.bindTexture(2);
+        tm.loadTexture(2,ac.getResources().getRock());
     }
 
     @Override
-    public void update(GameStatesManager gsm, Input i) {
+    public void init(GameStatesManager gsm, AdventureContainer ac) {
+        AdventureProperties ap = ac.getProperties();
+        width  = ap.getWidth();
+        height = ap.getHeight();
+
+        initLighting();
+        uploadTexturesToGPU(ac);
+
+        try {
+            sm.loadVertexShader("multiText.vert");
+            sm.loadFragmentShader("multiText.frag");
+            sm.createShaderProgram();
+            sm.useProgram();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        glUniform1i(glGetUniformLocation(sm.getSp(),"grass"),0);
+        glUniform1i(glGetUniformLocation(sm.getSp(),"dirt") ,1);
+        glUniform1i(glGetUniformLocation(sm.getSp(),"rock") ,2);
+
+    }
+
+    @Override
+    public void update(GameStatesManager gsm, AdventureContainer ac) {
+        Input i = ac.getInput();
         if(i.isKeyDown(GLFW_KEY_UP))    l.addPosDir(0f,0f,0.2f);
         if(i.isKeyDown(GLFW_KEY_DOWN))  l.addPosDir(0f,0f,-0.2f);
         if(i.isKeyDown(GLFW_KEY_LEFT))  l.addPosDir(0.2f,0f,0f);
@@ -98,7 +129,9 @@ public class InGameState extends GameState {
             vzm.render(br);
             br.uploadToGPU();
         }
+        //glEnable(GL_TEXTURE_2D);
         br.draw();
+        //glDisable(GL_TEXTURE_2D);
     }
 
     @Override

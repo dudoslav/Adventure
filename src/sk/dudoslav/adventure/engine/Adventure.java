@@ -19,10 +19,8 @@ public class Adventure {
     private GLFWErrorCallback errorCallback;
 
     private GameStatesManager gsm;
-    private AdventureProperties ap;
     private InputWrapper iw;
-
-    private long window;
+    private AdventureContainer ac;
 
     private int WIDTH;
     private int HEIGHT;
@@ -35,7 +33,7 @@ public class Adventure {
             loop();
 
             gsm.dispose();
-            glfwDestroyWindow(window);
+            glfwDestroyWindow(ac.getWindow());
         } catch (Exception e) {
             System.out.println("Something went wrong! -> "+e.getMessage());
             e.printStackTrace();
@@ -46,6 +44,9 @@ public class Adventure {
     }
 
     private void init() {
+        AdventureProperties ap;
+        long window;
+
         ap  = new AdventureProperties(new File("settings.prop"));
         try{
             ap.load();
@@ -85,6 +86,11 @@ public class Adventure {
 
         glfwShowWindow(window);
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //TODO: Neskor prenest do in game stateu.
+
+        Resources r = new Resources();
+        r.loadResources();
+
+        ac = new AdventureContainer(ap,iw.getInput(),r,window);
     }
 
     private void loop() {
@@ -92,13 +98,13 @@ public class Adventure {
         glClearColor(0.3f, 0.92f, 0.92f, 0.0f);
         glEnable(GL_DEPTH_TEST);
 
-        gsm = new GameStatesManager(ap);
+        gsm = new GameStatesManager(ac);
 
-        while ( glfwWindowShouldClose(window) == GL_FALSE ) {
+        while ( glfwWindowShouldClose(ac.getWindow()) == GL_FALSE ) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
             glViewport(0, 0, WIDTH, HEIGHT);
             gsm.tick(iw.getInput());
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(ac.getWindow());
             glfwPollEvents();
         }
     }

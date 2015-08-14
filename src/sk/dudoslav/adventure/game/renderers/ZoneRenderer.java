@@ -37,13 +37,13 @@ public class ZoneRenderer {
                 br.addVertex3f(x + 1 + zone.getOffsetX()*(Zone.WIDTH-1), zone.getPointAt(x + 1, z + 1), z + 1 + zone.getOffsetY()*(Zone.HEIGHT-1));
                 br.addVertex3f(x + 1 + zone.getOffsetX()*(Zone.WIDTH-1), zone.getPointAt(x + 1, z)    , z +     zone.getOffsetY()*(Zone.HEIGHT-1));
 
-                br.addColor3f(zone.getR(), zone.getG(), zone.getB());
+                /*br.addColor3f(zone.getR(), zone.getG(), zone.getB());
                 br.addColor3f(zone.getR(), zone.getG(), zone.getB());
                 br.addColor3f(zone.getR(),zone.getG(),zone.getB());
 
                 br.addColor3f(zone.getR(),zone.getG(),zone.getB());
                 br.addColor3f(zone.getR(),zone.getG(),zone.getB());
-                br.addColor3f(zone.getR(),zone.getG(),zone.getB());
+                br.addColor3f(zone.getR(),zone.getG(),zone.getB());*/
 
                 Vector3f n;
 

@@ -67,7 +67,7 @@ public class Player {
         lx = i.getMouseX();
         ly = i.getMouseY();
 
-        System.out.println("Player: ["+getX()+";"+getY()+";"+getZ()+"]");
+        //System.out.println("Player: ["+getX()+";"+getY()+";"+getZ()+"]");
     }
 
     private void move(float x, float y, float z){

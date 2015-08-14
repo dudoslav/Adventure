@@ -40,13 +40,23 @@ public class VisibleZoneRenderer {
                         br.addVertex3f(x + 1 + zone.getOffsetX() * (Zone.WIDTH - 1), zone.getPointAt(x + 1, z + 1), z + 1 + zone.getOffsetY() * (Zone.HEIGHT - 1));
                         br.addVertex3f(x + 1 + zone.getOffsetX() * (Zone.WIDTH - 1), zone.getPointAt(x + 1, z), z + zone.getOffsetY() * (Zone.HEIGHT - 1));
 
-                        br.addColor3f(zone.getR(), zone.getG(), zone.getB());
+                        //System.out.println((float)x / Zone.WIDTH+"<->"+z / Zone.HEIGHT);
+
+                        br.addTexCoord2f((float)x / Zone.WIDTH, (float)z / Zone.HEIGHT);
+                        br.addTexCoord2f((float)x / Zone.WIDTH, (float)(z + 1) / Zone.HEIGHT);
+                        br.addTexCoord2f((float)(x + 1) / Zone.WIDTH, (float)z / Zone.HEIGHT);
+
+                        br.addTexCoord2f((float)x / Zone.WIDTH, (float)(z + 1)/ Zone.HEIGHT);
+                        br.addTexCoord2f((float)(x + 1) / Zone.WIDTH, (float)(z + 1) / Zone.HEIGHT);
+                        br.addTexCoord2f((float)(x + 1) / Zone.WIDTH, (float)z / Zone.HEIGHT);
+
+                        /*br.addColor3f(zone.getR(), zone.getG(), zone.getB());
                         br.addColor3f(zone.getR(), zone.getG(), zone.getB());
                         br.addColor3f(zone.getR(),zone.getG(),zone.getB());
 
                         br.addColor3f(zone.getR(),zone.getG(),zone.getB());
                         br.addColor3f(zone.getR(),zone.getG(),zone.getB());
-                        br.addColor3f(zone.getR(),zone.getG(),zone.getB());
+                        br.addColor3f(zone.getR(),zone.getG(),zone.getB());*/
 
                         Vector3f n;
 
