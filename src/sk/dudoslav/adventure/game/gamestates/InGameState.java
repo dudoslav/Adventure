@@ -129,9 +129,8 @@ public class InGameState extends GameState {
             vzm.render(br);
             br.uploadToGPU();
         }
-        //glEnable(GL_TEXTURE_2D);
+
         br.draw();
-        //glDisable(GL_TEXTURE_2D);
     }
 
     @Override

@@ -15,8 +15,8 @@ void main()
 {
     vec4 texcolor = texture2D(dirt,texcoord);
 
-    float zone0 = -20f;
-    float zone1 = 0f;
+    float zone0 = -40f;
+    float zone1 = -20f;
     float zone2 = 20f;
     float zone3 = 35f;
 
@@ -36,9 +36,6 @@ void main()
         texcolor = texture2D(dirt,texcoord)*a2+texture2D(rock,texcoord)*a1;
     }
     if(h >= zone3) texcolor = texture2D(rock,texcoord);
-
-    /*float dist=length(position-gl_LightSource[0].position.xyz);
-    float att= 1.0/(1.0+0.1*dist+0.001*dist*dist);*/
 
     vec3 ambient=texcolor.xyz*gl_LightSource[0].ambient.xyz;
 
