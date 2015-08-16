@@ -122,22 +122,9 @@ public class InGameState extends GameState {
         l.updatePosDir();
 
         vzm.render();
-
-        /*if(vzm.shouldRender(p)){
-            //br.reset();
-            long t1 = System.currentTimeMillis();
-            //vzm.render(br);
-            System.out.println("Rendering - > " + (System.currentTimeMillis() - t1));
-            t1 = System.currentTimeMillis();
-            //br.uploadToGPU();
-            System.out.println("Uploading - > " + (System.currentTimeMillis() - t1));
-        }*/
-
-        //br.draw();
     }
 
     @Override
     public void dispose() {
-        //br.dispose();
     }
 }

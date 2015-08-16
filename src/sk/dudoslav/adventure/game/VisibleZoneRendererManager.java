@@ -15,6 +15,8 @@ public class VisibleZoneRendererManager {
     private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
 
     public void updateVBO(VisibleZone vz){
+        System.out.println("updating");
+
         if(!updating){
             updating = true;
             new Thread(new Runnable() {

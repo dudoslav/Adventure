@@ -8,42 +8,41 @@ import sk.dudoslav.adventure.game.renderers.ZoneRenderer;
  * Created by dusan on 11.08.2015.
  */
 public class VisibleZoneManager {
-    private int trd = 3; //TODO: dorobit s properties --> toto je tile render distance
+    private int trd = 4; //TODO: dorobit s properties --> toto je tile render distance
     private int wtrd = trd*2+1;
 
     private VisibleZone vz = new VisibleZone(wtrd);
-    //private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
     private VisibleZoneRendererManager vzrm = new VisibleZoneRendererManager();
 
     private int lpx = -100,lpz = -100;
-    private boolean sr = true;
+    private boolean ir = false;
 
     public void update(Player p, World w){
-
-        sr = lpx != p.getZoneX() || lpz != p.getZoneY();
+        if(lpx != p.getZoneX() || lpz != p.getZoneY()) {
+            ir = false;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int y = 0; y < wtrd; y++) {
+                        for (int x = 0; x < wtrd; x++) {
+                            vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
+                        }
+                    }
+                    ir = true;
+                }
+            }).start();
+        }
 
         lpx = p.getZoneX();
         lpz = p.getZoneY();
-
-        if(sr) {
-            long t1 = System.currentTimeMillis();
-            for (int y = 0; y < wtrd; y++) {
-                for (int x = 0; x < wtrd; x++) {
-                    vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
-                }
-            }
-            System.out.println("LoadGenerateTime = " + (System.currentTimeMillis()-t1));
-        }
     }
 
     public void render(){
-        if(shouldRender()) vzrm.updateVBO(vz);
+        if(ir) {
+            vzrm.updateVBO(vz);
+            ir = false;
+        }
         vzrm.renderVBO();
-        //vzr.render(br,vz);
-    }
-
-    public boolean shouldRender(){
-        return sr;
     }
 
 }

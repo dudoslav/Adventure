@@ -14,10 +14,10 @@ public class MountainGenerator extends Generator{
         setColor(0.58f,0.58f,0.58f);
         Random r = new Random();
         SimplexOctaveGenerator sog = new SimplexOctaveGenerator(r,16);
-        sog.setScale(1 / 512.f);
+        sog.setScale(1 / 1024.f);
 
         //addGeneratorComponent(new FlatTerrainGeneratorComponent());
-        addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,100));
+        addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,300));
         /*addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
         //addGeneratorComponent(new SmoothTerrainGeneratorComponent());*/
     }
