@@ -1,8 +1,7 @@
 package sk.dudoslav.adventure.engine.gamelogic;
 
 import sk.dudoslav.adventure.engine.AdventureContainer;
-import sk.dudoslav.adventure.engine.Input;
-import sk.dudoslav.adventure.engine.gamelogic.GameState;
+import sk.dudoslav.adventure.engine.input.Input;
 import sk.dudoslav.adventure.game.gamestates.InGameState;
 
 import java.util.ArrayList;

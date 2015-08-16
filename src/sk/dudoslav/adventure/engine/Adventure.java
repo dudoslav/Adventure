@@ -4,6 +4,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import sk.dudoslav.adventure.engine.gamelogic.GameStatesManager;
+import sk.dudoslav.adventure.engine.input.InputWrapper;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -16,7 +17,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 /**
  * Created by dusan on 09.08.2015.
  */
-public class Adventure {
+public final class Adventure {
     private GLFWErrorCallback errorCallback;
 
     private GameStatesManager gsm;
@@ -110,6 +111,7 @@ public class Adventure {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
             glViewport(0, 0, WIDTH, HEIGHT);
             gsm.tick(iw.getInput());
+            iw.getInput().updateMouse();
             glfwSwapBuffers(ac.getWindow());
             glfwPollEvents();
         }

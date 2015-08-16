@@ -1,5 +1,7 @@
 package sk.dudoslav.adventure.engine;
 
+import sk.dudoslav.adventure.engine.input.Input;
+
 /**
  * Created by dusan on 14.08.2015.
  */

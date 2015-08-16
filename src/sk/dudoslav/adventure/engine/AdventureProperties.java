@@ -63,4 +63,8 @@ public class AdventureProperties{
     public boolean isFullScreen(){
         return getBoolean("fullscreen",false);
     }
+
+    public int getRenderDistance(){
+        return getInt("renderdistance",3);
+    }
 }

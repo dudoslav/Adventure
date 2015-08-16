@@ -10,9 +10,11 @@ import sk.dudoslav.adventure.engine.graphics.Light;
 import sk.dudoslav.adventure.engine.graphics.Material;
 import sk.dudoslav.adventure.engine.graphics.ShaderManager;
 import sk.dudoslav.adventure.engine.graphics.TextureManager;
-import sk.dudoslav.adventure.game.Player;
-import sk.dudoslav.adventure.game.VisibleZoneManager;
-import sk.dudoslav.adventure.game.World;
+import sk.dudoslav.adventure.engine.input.Input;
+import sk.dudoslav.adventure.game.player.LocalPlayerController;
+import sk.dudoslav.adventure.game.player.Player;
+import sk.dudoslav.adventure.game.rendering.VisibleZoneManager;
+import sk.dudoslav.adventure.game.world.World;
 import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.FloatBuffer;
@@ -34,15 +36,15 @@ public class InGameState extends GameState {
 
     private FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 
-    //private BufferedRenderer br = new BufferedRenderer();
     private Light l = new Light(0);
     private Material m = new Material();
     private TextureManager tm = new TextureManager(3);
     private ShaderManager sm = new ShaderManager();
 
     private Player p = new Player();
+    private LocalPlayerController lpc;
 
-    private VisibleZoneManager vzm = new VisibleZoneManager();
+    private VisibleZoneManager vzm;
     private World w = new World();
 
     private void initLighting(){
@@ -81,6 +83,8 @@ public class InGameState extends GameState {
     @Override
     public void init(GameStatesManager gsm, AdventureContainer ac) {
         AdventureProperties ap = ac.getProperties();
+        vzm = new VisibleZoneManager(ap);
+        lpc = new LocalPlayerController(p,ac.getInput());
         width  = ap.getWidth();
         height = ap.getHeight();
 
@@ -112,7 +116,7 @@ public class InGameState extends GameState {
         if(i.isKeyDown(GLFW_KEY_DOWN))  l.addPosDir(0f,0f,-0.2f);
         if(i.isKeyDown(GLFW_KEY_LEFT))  l.addPosDir(0.2f,0f,0f);
         if(i.isKeyDown(GLFW_KEY_RIGHT)) l.addPosDir(-0.2f,0f,0f);
-        p.update(i);
+        lpc.update();
         vzm.update(p, w);
     }
 
