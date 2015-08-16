@@ -1,7 +1,7 @@
 package sk.dudoslav.adventure.game.renderers;
 
 import org.joml.Vector3f;
-import sk.dudoslav.adventure.engine.BufferedRenderer;
+import sk.dudoslav.adventure.engine.graphics.BufferedRenderer;
 import sk.dudoslav.adventure.game.VisibleZone;
 import sk.dudoslav.adventure.game.Zone;
 

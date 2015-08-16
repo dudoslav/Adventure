@@ -1,4 +1,4 @@
-package sk.dudoslav.adventure.engine;
+package sk.dudoslav.adventure.engine.graphics;
 
 import java.nio.ByteBuffer;
 
@@ -28,16 +28,16 @@ public class TextureManager {
         glBindTexture(GL_TEXTURE_2D, textures[num]);
     }
 
-    public void loadTexture(int num, ByteBuffer image){
+    public void loadTexture(int num, Image i){
         //TODO: zmenit width a height na nekonstanty!!!
 
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1024, 1024, 0, GL_RGBA,
-                GL_UNSIGNED_BYTE, image);
+                GL_UNSIGNED_BYTE, i.getPixels());
 
         glGenerateMipmap(GL_TEXTURE_2D);
     }

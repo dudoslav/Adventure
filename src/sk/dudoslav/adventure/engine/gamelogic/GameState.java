@@ -1,4 +1,6 @@
-package sk.dudoslav.adventure.engine;
+package sk.dudoslav.adventure.engine.gamelogic;
+
+import sk.dudoslav.adventure.engine.AdventureContainer;
 
 /**
  * Created by dusan on 09.08.2015.

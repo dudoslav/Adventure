@@ -1,4 +1,4 @@
-package sk.dudoslav.adventure.engine;
+package sk.dudoslav.adventure.engine.graphics;
 
 import org.lwjgl.BufferUtils;
 

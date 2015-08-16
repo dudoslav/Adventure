@@ -1,9 +1,5 @@
 package sk.dudoslav.adventure.game;
 
-import sk.dudoslav.adventure.engine.BufferedRenderer;
-import sk.dudoslav.adventure.game.renderers.VisibleZoneRenderer;
-import sk.dudoslav.adventure.game.renderers.ZoneRenderer;
-
 /**
  * Created by dusan on 11.08.2015.
  */

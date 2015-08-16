@@ -1,7 +1,5 @@
 package sk.dudoslav.adventure.game;
 
-import sk.dudoslav.adventure.engine.BufferedRenderer;
-
 /**
  * Created by dusan on 12.08.2015.
  */

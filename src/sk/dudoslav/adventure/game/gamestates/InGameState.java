@@ -4,6 +4,12 @@ import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import sk.dudoslav.adventure.engine.*;
+import sk.dudoslav.adventure.engine.gamelogic.GameState;
+import sk.dudoslav.adventure.engine.gamelogic.GameStatesManager;
+import sk.dudoslav.adventure.engine.graphics.Light;
+import sk.dudoslav.adventure.engine.graphics.Material;
+import sk.dudoslav.adventure.engine.graphics.ShaderManager;
+import sk.dudoslav.adventure.engine.graphics.TextureManager;
 import sk.dudoslav.adventure.game.Player;
 import sk.dudoslav.adventure.game.VisibleZoneManager;
 import sk.dudoslav.adventure.game.World;
@@ -12,7 +18,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
 /**

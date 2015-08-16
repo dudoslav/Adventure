@@ -1,6 +1,6 @@
 package sk.dudoslav.adventure.game;
 
-import sk.dudoslav.adventure.engine.BufferedRenderer;
+import sk.dudoslav.adventure.engine.graphics.BufferedRenderer;
 import sk.dudoslav.adventure.game.renderers.VisibleZoneRenderer;
 
 /**

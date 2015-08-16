@@ -3,6 +3,7 @@ package sk.dudoslav.adventure.engine;
 import org.lwjgl.Sys;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
+import sk.dudoslav.adventure.engine.gamelogic.GameStatesManager;
 
 import java.io.File;
 import java.nio.ByteBuffer;
