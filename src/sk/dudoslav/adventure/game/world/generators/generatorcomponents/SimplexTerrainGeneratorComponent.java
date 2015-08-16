@@ -14,7 +14,7 @@ public class SimplexTerrainGeneratorComponent extends GeneratorComponent {
     private final float h;
 
     public SimplexTerrainGeneratorComponent(float h){
-        sog.setScale(1 / 512.f);
+        sog.setScale(1 / 1024.f);
         this.h = h;
     }
 

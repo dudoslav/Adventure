@@ -1,6 +1,6 @@
 #version 130
-smooth out vec2 texcoord;
-smooth out float h;
+out vec2 texcoord;
+out float h;
 varying vec3 position;
 varying vec3 normal;
 

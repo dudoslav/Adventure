@@ -2,8 +2,8 @@
 uniform sampler2D grass;
 uniform sampler2D dirt;
 uniform sampler2D rock;
-smooth in vec2 texcoord;
-smooth in float h;
+in vec2 texcoord;
+in float h;
 
 varying vec3 position;
 varying vec3 normal;

@@ -16,8 +16,6 @@ public class VisibleZoneRendererManager {
     private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
 
     public void updateVBO(VisibleZone vz){
-        System.out.println("updating");
-
         if(!updating){
             updating = true;
             new Thread(new Runnable() {
@@ -41,15 +39,14 @@ public class VisibleZoneRendererManager {
         }
 
         if (dirty) {
-            long t1 = System.currentTimeMillis();
             br.uploadToGPU();
             dirty = false;
-            System.out.println("GPUuploadTime = " + (System.currentTimeMillis()-t1));
         }
 
         br.draw();
     }
 
-    //TODO: DISPOSE!!
-
+    public void dispose(){
+        br.dispose();
+    }
 }

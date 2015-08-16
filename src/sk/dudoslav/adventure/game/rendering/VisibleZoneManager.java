@@ -51,4 +51,8 @@ public class VisibleZoneManager {
         vzrm.renderVBO();
     }
 
+    public void dispose(){
+        vzrm.dispose();
+    }
+
 }

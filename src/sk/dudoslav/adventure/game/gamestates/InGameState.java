@@ -15,6 +15,8 @@ import sk.dudoslav.adventure.game.player.LocalPlayerController;
 import sk.dudoslav.adventure.game.player.Player;
 import sk.dudoslav.adventure.game.rendering.VisibleZoneManager;
 import sk.dudoslav.adventure.game.world.World;
+import sk.dudoslav.adventure.game.world.Zone;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.FloatBuffer;
@@ -69,22 +71,26 @@ public class InGameState extends GameState {
 
         tm.activateTexture(0);
         tm.bindTexture(0);
-        tm.loadTexture(0, ac.getResources().getGrass());
+        tm.loadTexture(ac.getResources().getGrass());
 
         tm.activateTexture(1);
         tm.bindTexture(1);
-        tm.loadTexture(1,ac.getResources().getDirt_grass());
+        tm.loadTexture(ac.getResources().getDirt_grass());
 
         tm.activateTexture(2);
         tm.bindTexture(2);
-        tm.loadTexture(2,ac.getResources().getRock());
+        tm.loadTexture(ac.getResources().getRock());
     }
 
     @Override
     public void init(GameStatesManager gsm, AdventureContainer ac) {
         AdventureProperties ap = ac.getProperties();
+
+        glfwSetInputMode(ac.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         vzm = new VisibleZoneManager(ap);
         lpc = new LocalPlayerController(p,ac.getInput());
+
         width  = ap.getWidth();
         height = ap.getHeight();
 
@@ -139,5 +145,6 @@ public class InGameState extends GameState {
 
     @Override
     public void dispose() {
+        vzm.dispose();
     }
 }

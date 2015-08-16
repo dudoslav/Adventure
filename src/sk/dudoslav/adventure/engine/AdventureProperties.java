@@ -64,6 +64,8 @@ public class AdventureProperties{
         return getBoolean("fullscreen",false);
     }
 
+    public boolean isVSync() {return getBoolean("vsync", false);}
+
     public int getRenderDistance(){
         return getInt("renderdistance",3);
     }

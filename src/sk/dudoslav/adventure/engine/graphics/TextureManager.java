@@ -28,9 +28,7 @@ public class TextureManager {
         glBindTexture(GL_TEXTURE_2D, textures[num]);
     }
 
-    public void loadTexture(int num, Image i){
-        //TODO: zmenit width a height na nekonstanty!!!
-
+    public void loadTexture(Image i){
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

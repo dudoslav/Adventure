@@ -1,4 +1,5 @@
 width=1280
 height=800
 fullscreen=false
+vsync=false
 renderdistance=6

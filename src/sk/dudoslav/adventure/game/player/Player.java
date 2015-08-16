@@ -1,9 +1,7 @@
 package sk.dudoslav.adventure.game.player;
 
-import sk.dudoslav.adventure.engine.input.Input;
 import sk.dudoslav.adventure.game.world.Zone;
 
-import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by dusan on 10.08.2015.

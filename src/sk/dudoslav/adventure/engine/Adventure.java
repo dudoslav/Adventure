@@ -89,10 +89,9 @@ public final class Adventure {
 
         glfwMakeContextCurrent(window);
 
-        //glfwSwapInterval(1); //TODO: toto je vsync - treba dorobit s propertiesamy.
+        if(ap.isVSync()) glfwSwapInterval(1);
 
         glfwShowWindow(window);
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //TODO: Neskor prenest do in game stateu.
 
         Resources r = new Resources();
         r.loadResources();
@@ -108,7 +107,7 @@ public final class Adventure {
         gsm = new GameStatesManager(ac);
 
         while ( glfwWindowShouldClose(ac.getWindow()) == GL_FALSE ) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glViewport(0, 0, WIDTH, HEIGHT);
             gsm.tick(iw.getInput());
             iw.getInput().updateMouse();
