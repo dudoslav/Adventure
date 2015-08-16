@@ -17,7 +17,7 @@ public class Zone {
     }
 
     private int offsetX,offsetY;
-    private float r,g,b;
+    private int q = 1;
 
     private float ps[][] = new float[WIDTH][HEIGHT];
 
@@ -26,22 +26,12 @@ public class Zone {
         this.offsetY = y;
     }
 
-    public void setColor(float r, float g, float b){
-        this.r = r;
-        this.g = g;
-        this.b = b;
+    public int getQ() {
+        return q;
     }
 
-    public float getR() {
-        return r;
-    }
-
-    public float getG() {
-        return g;
-    }
-
-    public float getB() {
-        return b;
+    public void setQ(int q) {
+        this.q = q;
     }
 
     public void setPointAt(int x, int y, float h){

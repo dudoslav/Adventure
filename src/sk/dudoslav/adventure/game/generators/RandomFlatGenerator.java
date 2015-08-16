@@ -12,7 +12,6 @@ import java.util.Random;
 public class RandomFlatGenerator extends Generator {
 
     public RandomFlatGenerator(){
-        setColor(0f,1f,0f);
         Random r = new Random();
         addGeneratorComponent(new FlatTerrainGeneratorComponent());
         addGeneratorComponent(new RandomTerrainGeneratorComponent(r.nextFloat()*2+1));

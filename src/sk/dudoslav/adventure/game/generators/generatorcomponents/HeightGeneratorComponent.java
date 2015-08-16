@@ -6,15 +6,15 @@ import sk.dudoslav.adventure.game.generators.noise.SimplexOctaveGenerator;
 import java.util.Random;
 
 /**
- * Created by dusan on 12.08.2015.
+ * Created by dusan on 16.08.2015.
  */
-public class SimplexTerrainGeneratorComponent extends GeneratorComponent {
+public class HeightGeneratorComponent extends GeneratorComponent {
 
     private final SimplexOctaveGenerator sog = new SimplexOctaveGenerator(new Random(),8);
     private final float h;
 
-    public SimplexTerrainGeneratorComponent(float h){
-        sog.setScale(1 / 512.f);
+    public HeightGeneratorComponent(float h){
+        sog.setScale(1 / 2048.f);
         this.h = h;
     }
 
@@ -23,7 +23,7 @@ public class SimplexTerrainGeneratorComponent extends GeneratorComponent {
         float alt;
         for (int y = 0; y < Zone.HEIGHT; y++){
             for (int x = 0; x < Zone.WIDTH; x++){
-                alt = (float) (sog.noise(x+z.getOffsetX()*(Zone.WIDTH-1),y+z.getOffsetY()*(Zone.HEIGHT-1),1.8d,0.5d))*z.getPointAt(x,y);
+                alt = (float) (sog.noise(x+z.getOffsetX()*(Zone.WIDTH-1),y+z.getOffsetY()*(Zone.HEIGHT-1),1.0d,0.4d)*h);
                 z.setPointAt(x,y, alt);
             }
         }
