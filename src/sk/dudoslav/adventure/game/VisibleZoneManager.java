@@ -12,7 +12,8 @@ public class VisibleZoneManager {
     private int wtrd = trd*2+1;
 
     private VisibleZone vz = new VisibleZone(wtrd);
-    private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
+    //private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
+    private VisibleZoneRendererManager vzrm = new VisibleZoneRendererManager();
 
     private int lpx = -100,lpz = -100;
     private boolean sr = true;
@@ -25,19 +26,23 @@ public class VisibleZoneManager {
         lpz = p.getZoneY();
 
         if(sr) {
+            long t1 = System.currentTimeMillis();
             for (int y = 0; y < wtrd; y++) {
                 for (int x = 0; x < wtrd; x++) {
                     vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
                 }
             }
+            System.out.println("LoadGenerateTime = " + (System.currentTimeMillis()-t1));
         }
     }
 
-    public void render(BufferedRenderer br){
-        vzr.render(br,vz);
+    public void render(){
+        if(shouldRender()) vzrm.updateVBO(vz);
+        vzrm.renderVBO();
+        //vzr.render(br,vz);
     }
 
-    public boolean shouldRender(Player p){
+    public boolean shouldRender(){
         return sr;
     }
 

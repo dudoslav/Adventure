@@ -25,6 +25,7 @@ public class BufferedRenderer {
     private int tbo;
 
     private int count = 0;
+    private int end = 0;
 
     public BufferedRenderer(){
         vbo = glGenBuffers();
@@ -39,18 +40,23 @@ public class BufferedRenderer {
         count = 0;
     }
 
-    public void uploadToGPU(){
+    public void flipBuffers(){
         v.flip();
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, v, GL_STATIC_DRAW);
-
         n.flip();
-        glBindBuffer(GL_ARRAY_BUFFER, nbo);
-        glBufferData(GL_ARRAY_BUFFER, n, GL_STATIC_DRAW);
-
         t.flip();
+        end = count;
+    }
+
+    public void uploadToGPU(){
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, v, GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, nbo);
+        glBufferData(GL_ARRAY_BUFFER, n, GL_DYNAMIC_DRAW);
+
         glBindBuffer(GL_ARRAY_BUFFER, tbo);
-        glBufferData(GL_ARRAY_BUFFER, t, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, t, GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -69,7 +75,7 @@ public class BufferedRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, tbo);
         glTexCoordPointer(TEXT_COORD_DIMENSIONS, GL_FLOAT, 0, 0);
 
-        glDrawArrays(GL_TRIANGLES, 0, count * 3);
+        glDrawArrays(GL_TRIANGLES, 0, end * 3);
 
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);
@@ -96,4 +102,5 @@ public class BufferedRenderer {
     public void addTexCoord2f(float x, float y){
         t.put(x).put(y);
     }
+
 }

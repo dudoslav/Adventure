@@ -21,7 +21,7 @@ public class SimplexTerrainGeneratorComponent extends GeneratorComponent {
         float alt;
         for (int y = 0; y < Zone.HEIGHT; y++){
             for (int x = 0; x < Zone.WIDTH; x++){
-                alt = (float) (sog.noise(x+z.getOffsetX()*(Zone.WIDTH-1),y+z.getOffsetY()*(Zone.HEIGHT-1),2.0d,0.5d)*h);
+                alt = (float) (sog.noise(x+z.getOffsetX()*(Zone.WIDTH-1),y+z.getOffsetY()*(Zone.HEIGHT-1),1.5d,0.5d)*h);
                 z.setPointAt(x,y, alt);
                 if(alt == -0f) System.out.println(alt);
             }

@@ -28,7 +28,7 @@ public class InGameState extends GameState {
 
     private FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 
-    private BufferedRenderer br = new BufferedRenderer();
+    //private BufferedRenderer br = new BufferedRenderer();
     private Light l = new Light(0);
     private Material m = new Material();
     private TextureManager tm = new TextureManager(3);
@@ -58,8 +58,6 @@ public class InGameState extends GameState {
     }
 
     private void uploadTexturesToGPU(AdventureContainer ac){
-
-        //glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
 
         tm.activateTexture(0);
         tm.bindTexture(0);
@@ -123,18 +121,23 @@ public class InGameState extends GameState {
 
         l.updatePosDir();
 
-        if(vzm.shouldRender(p)){
-            System.out.println("RENDERING!");
-            br.reset();
-            vzm.render(br);
-            br.uploadToGPU();
-        }
+        vzm.render();
 
-        br.draw();
+        /*if(vzm.shouldRender(p)){
+            //br.reset();
+            long t1 = System.currentTimeMillis();
+            //vzm.render(br);
+            System.out.println("Rendering - > " + (System.currentTimeMillis() - t1));
+            t1 = System.currentTimeMillis();
+            //br.uploadToGPU();
+            System.out.println("Uploading - > " + (System.currentTimeMillis() - t1));
+        }*/
+
+        //br.draw();
     }
 
     @Override
     public void dispose() {
-        br.dispose();
+        //br.dispose();
     }
 }
