@@ -39,7 +39,7 @@ void main()
 
     vec3 ambient=texcolor.xyz*gl_LightSource[0].ambient.xyz;
 
-    vec3 surf2light=normalize(gl_LightSource[0].position.xyz-position);
+    vec3 surf2light=normalize(gl_LightSource[0].position.xyz); //tu som odcital -position nevem preco ale ide lepsie lighting xD
     vec3 norm=normalize(normal);
     float dcont=max(0.0,dot(norm,surf2light));
     vec3 diffuse=dcont*texcolor.xyz*gl_LightSource[0].diffuse.xyz;
