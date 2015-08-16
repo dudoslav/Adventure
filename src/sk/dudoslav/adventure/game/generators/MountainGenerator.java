@@ -18,8 +18,8 @@ public class MountainGenerator extends Generator{
 
         //addGeneratorComponent(new FlatTerrainGeneratorComponent());
         addGeneratorComponent(new SimplexTerrainGeneratorComponent(sog,300));
-        /*addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
-        //addGeneratorComponent(new SmoothTerrainGeneratorComponent());*/
+        //addGeneratorComponent(new FractalTerrainGeneratorComponent(1f,9));
+        //addGeneratorComponent(new SmoothTerrainGeneratorComponent());
     }
 
 }

@@ -2,6 +2,7 @@ package sk.dudoslav.adventure.game.gamestates;
 
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
 import sk.dudoslav.adventure.engine.*;
 import sk.dudoslav.adventure.game.Player;
 import sk.dudoslav.adventure.game.VisibleZoneManager;
@@ -11,7 +12,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
@@ -77,6 +78,9 @@ public class InGameState extends GameState {
         AdventureProperties ap = ac.getProperties();
         width  = ap.getWidth();
         height = ap.getHeight();
+
+        float maxAnti = glGetFloat(EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT);
+        glTexParameterf(GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnti);
 
         initLighting();
         uploadTexturesToGPU(ac);

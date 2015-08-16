@@ -50,13 +50,13 @@ public class BufferedRenderer {
     public void uploadToGPU(){
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, v, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, v, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
-        glBufferData(GL_ARRAY_BUFFER, n, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, n, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, tbo);
-        glBufferData(GL_ARRAY_BUFFER, t, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, t, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -71,7 +71,7 @@ public class BufferedRenderer {
 
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
         glNormalPointer(GL_FLOAT, 0, 0);
-
+ 
         glBindBuffer(GL_ARRAY_BUFFER, tbo);
         glTexCoordPointer(TEXT_COORD_DIMENSIONS, GL_FLOAT, 0, 0);
 
