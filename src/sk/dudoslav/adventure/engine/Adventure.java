@@ -67,19 +67,24 @@ public class Adventure {
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Adventure", NULL, NULL);
+        ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+        if(ap.isFullScreen()){
+            window = glfwCreateWindow(WIDTH, HEIGHT, "Adventure", glfwGetPrimaryMonitor(), NULL);
+        } else {
+            window = glfwCreateWindow(WIDTH, HEIGHT, "Adventure", NULL, NULL);
+            glfwSetWindowPos(
+                    window,
+                    (GLFWvidmode.width(vidmode) - WIDTH) / 2,
+                    (GLFWvidmode.height(vidmode) - HEIGHT) / 2
+            );
+        }
+
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         iw = new InputWrapper(window);
-        ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-        glfwSetWindowPos(
-                window,
-                (GLFWvidmode.width(vidmode) - WIDTH) / 2,
-                (GLFWvidmode.height(vidmode) - HEIGHT) / 2
-        );
 
         glfwMakeContextCurrent(window);
 

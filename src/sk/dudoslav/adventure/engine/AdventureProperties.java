@@ -53,10 +53,14 @@ public class AdventureProperties{
     }
 
     public int getWidth(){
-        return getInt("width",800);
+        return getInt("width", 800);
     }
 
     public int getHeight(){
         return getInt("height",600);
+    }
+
+    public boolean isFullScreen(){
+        return getBoolean("fullscreen",false);
     }
 }
