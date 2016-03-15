@@ -26,16 +26,13 @@ public class VisibleZoneManager {
     public void update(Player p, World w){
         if(lpx != p.getZoneX() || lpz != p.getZoneY()) {
             ir = false;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int y = 0; y < wtrd; y++) {
-                        for (int x = 0; x < wtrd; x++) {
-                            vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
-                        }
+            new Thread(() -> {
+                for (int y = 0; y < wtrd; y++) {
+                    for (int x = 0; x < wtrd; x++) {
+                        vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
                     }
-                    ir = true;
                 }
+                ir = true;
             }).start();
         }
 

@@ -7,6 +7,7 @@ import sk.dudoslav.adventure.engine.Adventure;
  */
 public class Main {
     public Main() {
+        SharedLibraryLoader.load();
         Adventure a = new Adventure();
         a.run();
     }

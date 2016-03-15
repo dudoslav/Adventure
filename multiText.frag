@@ -15,10 +15,10 @@ void main()
 {
     vec4 texcolor = texture2D(dirt,texcoord);
 
-    float zone0 = 0f;
-    float zone1 = 10f;
-    float zone2 = 30f;
-    float zone3 = 50f;
+    float zone0 = 0.f;
+    float zone1 = 10.f;
+    float zone2 = 30.f;
+    float zone3 = 50.f;
 
 
     if(h < zone0) texcolor = texture2D(grass,texcoord);

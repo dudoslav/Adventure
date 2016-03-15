@@ -1,0 +1,33 @@
+group 'sk.dudoslav'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+mainClassName = "sk.dudoslav.adventure.Main"
+
+repositories {
+    mavenCentral()
+}
+
+project.ext.lwjglVersion = "3.0.0a"
+
+dependencies {
+    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+    compile 'org.joml:joml:1.4.0'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class' : mainClassName
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
