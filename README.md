@@ -10,7 +10,7 @@ Rendering is done by using OpenGL in lwjgl3. I tried to use newest OpenGL. Also 
 #CONTROLLS
 + W/A/S/D - for moving
 + Mouse - for rotating
-+ Arrows - for moving sun :)
++ Arrows - for moving sun
 
 #BUILDING
-+ Good luck I have no idea
++ This project uses gradle so it should be simple to build it
