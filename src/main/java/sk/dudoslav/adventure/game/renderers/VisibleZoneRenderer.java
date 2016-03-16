@@ -27,8 +27,8 @@ public class VisibleZoneRenderer {
 
     public void render(BufferedRenderer br, VisibleZone vz) {
         Zone zone;
-        for (int vzy = 0; vzy < vz.getWtrd(); vzy++)
-            for (int vzx = 0; vzx < vz.getWtrd(); vzx++) {
+        for (int vzy = 0; vzy < vz.getWorldTileRenderDistance(); vzy++)
+            for (int vzx = 0; vzx < vz.getWorldTileRenderDistance(); vzx++) {
                 zone = vz.getZone(vzx, vzy);
                 for (int z = 0; z < Zone.HEIGHT - 1; z++)
                     for (int x = 0; x < Zone.WIDTH - 1; x++) {

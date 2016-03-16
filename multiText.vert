@@ -8,7 +8,9 @@ void main()
 {
     texcoord = gl_MultiTexCoord0.xy;
     h = gl_Vertex.y;
-    gl_Position=ftransform();
-    position =  vec3(gl_ModelViewMatrix*gl_Vertex);
+    vec4 vertex = gl_Vertex;
+    vertex.y = vertex.y + (vertex.x + vertex.z) / 4;
+    gl_Position=gl_ProjectionMatrix * gl_ModelViewMatrix * vertex;
+    position = vec3(gl_ModelViewMatrix*gl_Vertex);
     normal = vec3(gl_NormalMatrix*gl_Normal);
 }

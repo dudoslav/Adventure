@@ -10,35 +10,33 @@ import java.util.ArrayList;
  * Created by dusan on 09.08.2015.
  */
 public class GameStatesManager {
-    private final AdventureContainer ac;
+    private final AdventureContainer adventureContainer;
 
-    private ArrayList<GameState> gss = new ArrayList<>();
-    private GameState cgs;
+    private ArrayList<GameState> gameStates = new ArrayList<>();
+    private GameState currentGameState;
 
     public GameStatesManager(AdventureContainer ac){
-        this.ac = ac;
+        this.adventureContainer = ac;
         addState(new InGameState());
         enterState(InGameState.ID);
     }
 
-    public void tick(Input i){
-        cgs.update(this, ac);
-        cgs.render();
+    public void tick(){
+        currentGameState.update(this, adventureContainer);
+        currentGameState.render();
     }
 
     public void enterState(int ID){
-        cgs = gss.get(ID);
-        cgs.init(this, ac);
+        currentGameState = gameStates.get(ID);
+        currentGameState.init(this, adventureContainer);
     }
 
     public void addState(GameState gs){
-        gss.add(gs);
+        gameStates.add(gs);
     }
 
     public void dispose(){
-        for (GameState gs : gss){
-            gs.dispose();
-        }
+        gameStates.forEach(GameState::dispose);
     }
 
 }

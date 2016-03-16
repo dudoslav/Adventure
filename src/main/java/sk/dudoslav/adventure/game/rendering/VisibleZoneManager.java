@@ -8,31 +8,31 @@ import sk.dudoslav.adventure.game.world.World;
  * Created by dusan on 11.08.2015.
  */
 public class VisibleZoneManager {
-    private final int trd;
-    private final int wtrd;
+    private final int tileRenderDistance;
+    private final int worldTileRenderDistance;
 
-    private VisibleZone vz;
-    private VisibleZoneRendererManager vzrm = new VisibleZoneRendererManager();
+    private VisibleZone visibleZone;
+    private VisibleZoneRendererManager visibleZoneRendererManager = new VisibleZoneRendererManager();
 
     private int lpx = -100,lpz = -100;
-    private boolean ir = false;
+    private boolean isReady = false;
 
     public VisibleZoneManager(AdventureProperties ap){
-        trd = ap.getRenderDistance();
-        wtrd = trd*2+1;
-        vz = new VisibleZone(wtrd);
+        tileRenderDistance = ap.getRenderDistance();
+        worldTileRenderDistance = tileRenderDistance *2+1;
+        visibleZone = new VisibleZone(worldTileRenderDistance);
     }
 
     public void update(Player p, World w){
         if(lpx != p.getZoneX() || lpz != p.getZoneY()) {
-            ir = false;
+            isReady = false;
             new Thread(() -> {
-                for (int y = 0; y < wtrd; y++) {
-                    for (int x = 0; x < wtrd; x++) {
-                        vz.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - trd - 1, p.getZoneY() + y - trd - 1));
+                for (int y = 0; y < worldTileRenderDistance; y++) {
+                    for (int x = 0; x < worldTileRenderDistance; x++) {
+                        visibleZone.addZone(x,y,w.loadOrGenerateZone(p.getZoneX() + x - tileRenderDistance - 1, p.getZoneY() + y - tileRenderDistance - 1));
                     }
                 }
-                ir = true;
+                isReady = true;
             }).start();
         }
 
@@ -41,15 +41,15 @@ public class VisibleZoneManager {
     }
 
     public void render(){
-        if(ir) {
-            vzrm.updateVBO(vz);
-            ir = false;
+        if(isReady) {
+            visibleZoneRendererManager.updateVBO(visibleZone);
+            isReady = false;
         }
-        vzrm.renderVBO();
+        visibleZoneRendererManager.renderVBO();
     }
 
     public void dispose(){
-        vzrm.dispose();
+        visibleZoneRendererManager.dispose();
     }
 
 }

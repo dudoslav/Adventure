@@ -10,10 +10,10 @@ import static org.lwjgl.opengl.GL11.*;
  * Created by dusan on 12.08.2015.
  */
 public class Light {
-    FloatBuffer ambientLightColor;
-    FloatBuffer specularLight;
-    FloatBuffer lightColor0;
-    FloatBuffer lightPos0;
+    private FloatBuffer ambientLightColor;
+    private FloatBuffer specularLight;
+    private FloatBuffer lightColor0;
+    private FloatBuffer lightPos0;
 
     private float x,y,z;
     private final int num;

@@ -11,10 +11,10 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class Material {
 
-    FloatBuffer ambient;
-    FloatBuffer specular;
-    FloatBuffer diffuse;
-    FloatBuffer emission;
+    private FloatBuffer ambient;
+    private FloatBuffer specular;
+    private FloatBuffer diffuse;
+    private FloatBuffer emission;
 
     public Material(){
 

@@ -8,8 +8,8 @@ import sk.dudoslav.adventure.engine.Adventure;
 public class Main {
     public Main() {
         SharedLibraryLoader.load();
-        Adventure a = new Adventure();
-        a.run();
+        Adventure adventure = new Adventure();
+        adventure.run();
     }
 
     public static void main(String[] args) {

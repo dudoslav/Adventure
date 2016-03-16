@@ -8,18 +8,21 @@ import org.lwjgl.opengl.GL11;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Created by dusan on 13.08.2015.
  */
 public class ShaderManager {
 
-    private int vs;  //Vertex Shader
-    private int fs;  //Fragment Shader
-    private int sp;  //Shader Program
+    private int vertexShaderHandle;
+    private int fragmentShaderHandle;
+    private int shaderProgramHandle;
 
     public void useShader(){
-        ARBShaderObjects.glUseProgramObjectARB(sp);
+        ARBShaderObjects.glUseProgramObjectARB(shaderProgramHandle);
     }
 
     public void releaseShader(){
@@ -27,88 +30,41 @@ public class ShaderManager {
     }
 
     public void loadVertexShader(String filename) throws Exception{
-        vs = createShader(filename, ARBVertexShader.GL_VERTEX_SHADER_ARB);
+        vertexShaderHandle = createShader(filename, ARBVertexShader.GL_VERTEX_SHADER_ARB);
     }
 
     public void loadFragmentShader(String filename) throws Exception{
-        fs = createShader(filename, ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
+        fragmentShaderHandle = createShader(filename, ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
     }
 
     public void createShaderProgram() throws Exception{
-        sp = ARBShaderObjects.glCreateProgramObjectARB();
+        shaderProgramHandle = ARBShaderObjects.glCreateProgramObjectARB();
 
-        if(sp == 0) throw new Exception("Failed to create shader program: " + getLogInfo(sp));
+        if(shaderProgramHandle == 0) throw new Exception("Failed to create shader program: " + getLogInfo(shaderProgramHandle));
 
-        ARBShaderObjects.glAttachObjectARB(sp, vs);
-        ARBShaderObjects.glAttachObjectARB(sp, fs);
+        ARBShaderObjects.glAttachObjectARB(shaderProgramHandle, vertexShaderHandle);
+        ARBShaderObjects.glAttachObjectARB(shaderProgramHandle, fragmentShaderHandle);
 
-        ARBShaderObjects.glLinkProgramARB(sp);
-        if (ARBShaderObjects.glGetObjectParameteriARB(sp, ARBShaderObjects.GL_OBJECT_LINK_STATUS_ARB) == GL11.GL_FALSE) {
-            System.err.println(getLogInfo(sp));
-            throw new Exception("Error in shader program: " + getLogInfo(sp));
+        ARBShaderObjects.glLinkProgramARB(shaderProgramHandle);
+        if (ARBShaderObjects.glGetObjectParameteriARB(shaderProgramHandle, ARBShaderObjects.GL_OBJECT_LINK_STATUS_ARB) == GL11.GL_FALSE) {
+            System.err.println(getLogInfo(shaderProgramHandle));
+            throw new Exception("Error in shader program: " + getLogInfo(shaderProgramHandle));
         }
 
-        ARBShaderObjects.glValidateProgramARB(sp);
-        if (ARBShaderObjects.glGetObjectParameteriARB(sp, ARBShaderObjects.GL_OBJECT_VALIDATE_STATUS_ARB) == GL11.GL_FALSE) {
-            System.err.println(getLogInfo(sp));
-            throw new Exception("Error in shader program: " + getLogInfo(sp));
+        ARBShaderObjects.glValidateProgramARB(shaderProgramHandle);
+        if (ARBShaderObjects.glGetObjectParameteriARB(shaderProgramHandle, ARBShaderObjects.GL_OBJECT_VALIDATE_STATUS_ARB) == GL11.GL_FALSE) {
+            System.err.println(getLogInfo(shaderProgramHandle));
+            throw new Exception("Error in shader program: " + getLogInfo(shaderProgramHandle));
         }
     }
 
     private String readFileAsString(String filename) throws Exception{
-        StringBuilder source = new StringBuilder();
-
-        FileInputStream in = new FileInputStream(filename);
-
-        Exception exception = null;
-
-        BufferedReader reader;
-        try{
-            reader = new BufferedReader(new InputStreamReader(in,"UTF-8"));
-
-            Exception innerExc= null;
-            try {
-                String line;
-                while((line = reader.readLine()) != null)
-                    source.append(line).append('\n');
-            }
-            catch(Exception exc) {
-                exception = exc;
-            }
-            finally {
-                try {
-                    reader.close();
-                }
-                catch(Exception exc) {
-                    if(innerExc == null)
-                        innerExc = exc;
-                    else
-                        exc.printStackTrace();
-                }
-            }
-
-            if(innerExc != null)
-                throw innerExc;
+        StringBuilder stringBuilder = new StringBuilder();
+        List<String> lines = Files.readAllLines(Paths.get(filename));
+        for(String line: lines){
+            stringBuilder.append(line).append('\n');
         }
-        catch(Exception exc) {
-            exception = exc;
-        }
-        finally {
-            try {
-                in.close();
-            }
-            catch(Exception exc) {
-                if(exception == null)
-                    exception = exc;
-                else
-                    exc.printStackTrace();
-            }
-
-            if(exception != null)
-                throw exception;
-        }
-
-        return source.toString();
+        return stringBuilder.toString();
     }
 
     private static String getLogInfo(int obj) {
@@ -134,10 +90,10 @@ public class ShaderManager {
     }
 
     public void useProgram(){
-        ARBShaderObjects.glUseProgramObjectARB(sp);
+        ARBShaderObjects.glUseProgramObjectARB(shaderProgramHandle);
     }
 
-    public int getSp() {
-        return sp;
+    public int getShaderProgramHandle() {
+        return shaderProgramHandle;
     }
 }

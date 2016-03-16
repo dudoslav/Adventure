@@ -20,9 +20,9 @@ import static org.lwjgl.system.MemoryUtil.*;
 public final class Adventure {
     private GLFWErrorCallback errorCallback;
 
-    private GameStatesManager gsm;
-    private InputWrapper iw;
-    private AdventureContainer ac;
+    private GameStatesManager gameStatesManager;
+    private InputWrapper inputWrapper;
+    private AdventureContainer adventureContainer;
 
     private int WIDTH;
     private int HEIGHT;
@@ -34,8 +34,8 @@ public final class Adventure {
             init();
             loop();
 
-            gsm.dispose();
-            glfwDestroyWindow(ac.getWindow());
+            gameStatesManager.dispose();
+            glfwDestroyWindow(adventureContainer.getWindow());
         } catch (Exception e) {
             System.out.println("Something went wrong! -> "+e.getMessage());
             e.printStackTrace();
@@ -85,7 +85,7 @@ public final class Adventure {
             throw new RuntimeException("Failed to create the GLFW window");
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        iw = new InputWrapper(window);
+        inputWrapper = new InputWrapper(window);
 
         glfwMakeContextCurrent(window);
 
@@ -96,7 +96,7 @@ public final class Adventure {
         Resources r = new Resources();
         r.loadResources();
 
-        ac = new AdventureContainer(ap,iw.getInput(),r,window);
+        adventureContainer = new AdventureContainer(ap, inputWrapper.getInput(),r,window);
     }
 
     private void loop() {
@@ -104,14 +104,14 @@ public final class Adventure {
         glClearColor(0.3f, 0.92f, 0.92f, 0.0f);
         glEnable(GL_DEPTH_TEST);
 
-        gsm = new GameStatesManager(ac);
+        gameStatesManager = new GameStatesManager(adventureContainer);
 
-        while ( glfwWindowShouldClose(ac.getWindow()) == GL_FALSE ) {
+        while ( glfwWindowShouldClose(adventureContainer.getWindow()) == GL_FALSE ) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glViewport(0, 0, WIDTH, HEIGHT);
-            gsm.tick(iw.getInput());
-            iw.getInput().updateMouse();
-            glfwSwapBuffers(ac.getWindow());
+            gameStatesManager.tick();
+            inputWrapper.getInput().updateMouse();
+            glfwSwapBuffers(adventureContainer.getWindow());
             glfwPollEvents();
         }
     }

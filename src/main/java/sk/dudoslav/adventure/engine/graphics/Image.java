@@ -14,30 +14,30 @@ import java.nio.ByteBuffer;
 public class Image {
 
     private final ByteBuffer pixels;
-    private final int w,h;
+    private final int width, height;
 
     public Image(String type, String path) throws Exception{
-        BufferedImage bi = ImageIO.read(new File(path));
+        BufferedImage bufferedImage = ImageIO.read(new File(path));
 
-        byte[] b = new byte[bi.getWidth()*bi.getHeight()*4];
+        byte[] pixels = new byte[bufferedImage.getWidth()*bufferedImage.getHeight()*4];
 
         Color c;
 
-        for(int y = 0; y < bi.getHeight(); y++)
-            for(int x = 0; x < bi.getWidth(); x++){
-                c = new Color(bi.getRGB(x,y));
-                b[((x+y*bi.getWidth())*4)] = (byte) c.getRed();
-                b[((x+y*bi.getWidth())*4)+1] = (byte) c.getGreen();
-                b[((x+y*bi.getWidth())*4)+2] = (byte) c.getBlue();
-                b[((x+y*bi.getWidth())*4)+3] = (byte) c.getAlpha();
+        for(int y = 0; y < bufferedImage.getHeight(); y++)
+            for(int x = 0; x < bufferedImage.getWidth(); x++){
+                c = new Color(bufferedImage.getRGB(x,y));
+                pixels[((x+y*bufferedImage.getWidth())*4)] = (byte) c.getRed();
+                pixels[((x+y*bufferedImage.getWidth())*4)+1] = (byte) c.getGreen();
+                pixels[((x+y*bufferedImage.getWidth())*4)+2] = (byte) c.getBlue();
+                pixels[((x+y*bufferedImage.getWidth())*4)+3] = (byte) c.getAlpha();
             }
 
-        ByteBuffer bb = BufferUtils.createByteBuffer(bi.getWidth() * bi.getHeight() * 4).put(b);
-        bb.flip();
+        ByteBuffer pixelBuffer = BufferUtils.createByteBuffer(bufferedImage.getWidth() * bufferedImage.getHeight() * 4).put(pixels);
+        pixelBuffer.flip();
 
-        pixels = bb;
-        w = bi.getWidth();
-        h = bi.getHeight();
+        this.pixels = pixelBuffer;
+        width = bufferedImage.getWidth();
+        height = bufferedImage.getHeight();
     }
 
     public ByteBuffer getPixels() {
@@ -45,10 +45,10 @@ public class Image {
     }
 
     public int getWidth() {
-        return w;
+        return width;
     }
 
     public int getHeight() {
-        return h;
+        return height;
     }
 }

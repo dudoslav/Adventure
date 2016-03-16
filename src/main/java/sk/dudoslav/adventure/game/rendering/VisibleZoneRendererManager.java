@@ -2,7 +2,6 @@ package sk.dudoslav.adventure.game.rendering;
 
 import sk.dudoslav.adventure.engine.graphics.BufferedRenderer;
 import sk.dudoslav.adventure.game.renderers.VisibleZoneRenderer;
-import sk.dudoslav.adventure.game.rendering.VisibleZone;
 
 /**
  * Created by dusan on 16.08.2015.
@@ -12,8 +11,8 @@ public class VisibleZoneRendererManager {
     private boolean fresh = true;
     private boolean dirty, updating;
 
-    private BufferedRenderer br = new BufferedRenderer();
-    private VisibleZoneRenderer vzr = new VisibleZoneRenderer();
+    private BufferedRenderer bufferedRenderer = new BufferedRenderer();
+    private VisibleZoneRenderer visibleZoneRenderer = new VisibleZoneRenderer();
 
     public void updateVBO(VisibleZone vz){
         if(!updating){
@@ -21,9 +20,9 @@ public class VisibleZoneRendererManager {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    br.reset();
-                    vzr.render(br, vz);
-                    br.flipBuffers();
+                    bufferedRenderer.reset();
+                    visibleZoneRenderer.render(bufferedRenderer, vz);
+                    bufferedRenderer.flipBuffers();
 
                     dirty = true;
                     updating = false;
@@ -39,14 +38,14 @@ public class VisibleZoneRendererManager {
         }
 
         if (dirty) {
-            br.uploadToGPU();
+            bufferedRenderer.uploadToGPU();
             dirty = false;
         }
 
-        br.draw();
+        bufferedRenderer.draw();
     }
 
     public void dispose(){
-        br.dispose();
+        bufferedRenderer.dispose();
     }
 }

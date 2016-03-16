@@ -8,24 +8,24 @@ import java.util.Properties;
  * Created by dusan on 09.08.2015.
  */
 public class AdventureProperties{
-    private final Properties p;
-    private final File f;
+    private final Properties properties;
+    private final File file;
 
     public AdventureProperties(File f){
-        this.f = f;
-        this.p  = new Properties();
+        this.file = f;
+        this.properties = new Properties();
     }
 
     public void load() throws Exception {
-        p.load(new FileReader(f));
+        properties.load(new FileReader(file));
     }
 
     private String getString(String key) {
-        return p.getProperty(key);
+        return properties.getProperty(key);
     }
 
     private String getString(String key, String def) {
-        return p.getProperty(key, def);
+        return properties.getProperty(key, def);
     }
 
     private Double getDouble(String key) {

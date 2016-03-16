@@ -11,10 +11,10 @@ import static org.lwjgl.opengl.GL11.GL_TRUE;
  */
 public class KeyCallbackHandler extends GLFWKeyCallback {
 
-    private final Input i;
+    private final Input input;
 
     public KeyCallbackHandler(Input i){
-        this.i = i;
+        this.input = i;
     }
 
     @Override
@@ -24,10 +24,10 @@ public class KeyCallbackHandler extends GLFWKeyCallback {
 
         switch (action){
             case GLFW_PRESS:
-                i.updateKey(key, true);
+                input.updateKey(key, true);
                 break;
             case GLFW_RELEASE:
-                i.updateKey(key, false);
+                input.updateKey(key, false);
                 break;
         }
     }

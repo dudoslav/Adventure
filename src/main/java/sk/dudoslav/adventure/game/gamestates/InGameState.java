@@ -15,7 +15,6 @@ import sk.dudoslav.adventure.game.player.LocalPlayerController;
 import sk.dudoslav.adventure.game.player.Player;
 import sk.dudoslav.adventure.game.rendering.VisibleZoneManager;
 import sk.dudoslav.adventure.game.world.World;
-import sk.dudoslav.adventure.game.world.Zone;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -27,31 +26,31 @@ import static org.lwjgl.opengl.GL20.*;
 /**
  * Created by dusan on 09.08.2015.
  */
-public class InGameState extends GameState {
+public class InGameState implements GameState {
     public static final int ID = 0;
 
     private int width;
     private int height;
 
-    private Matrix4f pm = new Matrix4f(); //ProjectionMatrix
-    private Matrix4f vm = new Matrix4f(); //ViewMatrix
+    private Matrix4f projectionMatrix = new Matrix4f(); //ProjectionMatrix
+    private Matrix4f viewMatrix = new Matrix4f(); //ViewMatrix
 
-    private FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+    private FloatBuffer tempMatrixBuffer = BufferUtils.createFloatBuffer(16);
 
-    private Light l = new Light(0);
-    private Material m = new Material();
-    private TextureManager tm = new TextureManager(3);
-    private ShaderManager sm = new ShaderManager();
+    private Light light = new Light(0);
+    private Material material = new Material();
+    private TextureManager textureManager = new TextureManager(3);
+    private ShaderManager shaderManager = new ShaderManager();
 
-    private Player p = new Player();
-    private LocalPlayerController lpc;
+    private Player player = new Player();
+    private LocalPlayerController localPlayerController;
 
-    private VisibleZoneManager vzm;
+    private VisibleZoneManager visibleZoneManager;
     private World w = new World();
 
     private void initLighting(){
 
-        l.createDirectionalLight();
+        light.createDirectionalLight();
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -60,8 +59,8 @@ public class InGameState extends GameState {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
-        l.enable();
-        m.apply();
+        light.enable();
+        material.apply();
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -69,17 +68,17 @@ public class InGameState extends GameState {
 
     private void uploadTexturesToGPU(AdventureContainer ac){
 
-        tm.activateTexture(0);
-        tm.bindTexture(0);
-        tm.loadTexture(ac.getResources().getGrass());
+        textureManager.activateTexture(0);
+        textureManager.bindTexture(0);
+        textureManager.loadTexture(ac.getResources().getGrass());
 
-        tm.activateTexture(1);
-        tm.bindTexture(1);
-        tm.loadTexture(ac.getResources().getDirt_grass());
+        textureManager.activateTexture(1);
+        textureManager.bindTexture(1);
+        textureManager.loadTexture(ac.getResources().getDirt_grass());
 
-        tm.activateTexture(2);
-        tm.bindTexture(2);
-        tm.loadTexture(ac.getResources().getRock());
+        textureManager.activateTexture(2);
+        textureManager.bindTexture(2);
+        textureManager.loadTexture(ac.getResources().getRock());
     }
 
     @Override
@@ -88,8 +87,8 @@ public class InGameState extends GameState {
 
         glfwSetInputMode(ac.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-        vzm = new VisibleZoneManager(ap);
-        lpc = new LocalPlayerController(p,ac.getInput());
+        visibleZoneManager = new VisibleZoneManager(ap);
+        localPlayerController = new LocalPlayerController(player,ac.getInput());
 
         width  = ap.getWidth();
         height = ap.getHeight();
@@ -101,50 +100,50 @@ public class InGameState extends GameState {
         uploadTexturesToGPU(ac);
 
         try {
-            sm.loadVertexShader("multiText.vert");
-            sm.loadFragmentShader("multiText.frag");
-            sm.createShaderProgram();
-            sm.useProgram();
+            shaderManager.loadVertexShader("multiText.vert");
+            shaderManager.loadFragmentShader("multiText.frag");
+            shaderManager.createShaderProgram();
+            shaderManager.useProgram();
         } catch (Exception e){
             e.printStackTrace();
         }
 
-        glUniform1i(glGetUniformLocation(sm.getSp(),"grass"),0);
-        glUniform1i(glGetUniformLocation(sm.getSp(),"dirt") ,1);
-        glUniform1i(glGetUniformLocation(sm.getSp(),"rock") ,2);
+        glUniform1i(glGetUniformLocation(shaderManager.getShaderProgramHandle(),"grass"),0);
+        glUniform1i(glGetUniformLocation(shaderManager.getShaderProgramHandle(),"dirt") ,1);
+        glUniform1i(glGetUniformLocation(shaderManager.getShaderProgramHandle(),"rock") ,2);
 
     }
 
     @Override
     public void update(GameStatesManager gsm, AdventureContainer ac) {
         Input i = ac.getInput();
-        if(i.isKeyDown(GLFW_KEY_UP))    l.addPosDir(0f,0f,0.2f);
-        if(i.isKeyDown(GLFW_KEY_DOWN))  l.addPosDir(0f,0f,-0.2f);
-        if(i.isKeyDown(GLFW_KEY_LEFT))  l.addPosDir(0.2f,0f,0f);
-        if(i.isKeyDown(GLFW_KEY_RIGHT)) l.addPosDir(-0.2f,0f,0f);
-        lpc.update();
-        vzm.update(p, w);
+        if(i.isKeyDown(GLFW_KEY_UP))    light.addPosDir(0f,0f,0.2f);
+        if(i.isKeyDown(GLFW_KEY_DOWN))  light.addPosDir(0f,0f,-0.2f);
+        if(i.isKeyDown(GLFW_KEY_LEFT))  light.addPosDir(0.2f,0f,0f);
+        if(i.isKeyDown(GLFW_KEY_RIGHT)) light.addPosDir(-0.2f,0f,0f);
+        localPlayerController.update();
+        visibleZoneManager.update(player, w);
     }
 
     @Override
     public void render() {
-        pm.setPerspective(45.f, (float)width/height, 0.01f, 10000.0f).get(fb);
+        projectionMatrix.setPerspective(45.f, (float)width/height, 0.01f, 10000.0f).get(tempMatrixBuffer);
         glMatrixMode(GL_PROJECTION);
-        glLoadMatrixf(fb);
+        glLoadMatrixf(tempMatrixBuffer);
 
-        vm.setLookAt(0.0f, 1.0f, 2.0f,
+        viewMatrix.setLookAt(0.0f, 1.0f, 2.0f,
                      0.0f, 0.0f, 0.0f,
-                     0.0f, 1.0f, 0.0f).rotate(p.getRx(), 1f, 0f, 0f).rotate(p.getRy(), 0f, 1f, 0f).translate(p.getX(),p.getY(),p.getZ()).get(fb);
+                     0.0f, 1.0f, 0.0f).rotate(player.getRx(), 1f, 0f, 0f).rotate(player.getRy(), 0f, 1f, 0f).translate(player.getX(), player.getY(), player.getZ()).get(tempMatrixBuffer);
         glMatrixMode(GL_MODELVIEW);
-        glLoadMatrixf(fb);
+        glLoadMatrixf(tempMatrixBuffer);
 
-        l.updatePosDir();
+        light.updatePosDir();
 
-        vzm.render();
+        visibleZoneManager.render();
     }
 
     @Override
     public void dispose() {
-        vzm.dispose();
+        visibleZoneManager.dispose();
     }
 }

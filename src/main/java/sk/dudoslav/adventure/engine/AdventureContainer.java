@@ -6,32 +6,32 @@ import sk.dudoslav.adventure.engine.input.Input;
  * Created by dusan on 14.08.2015.
  */
 public class AdventureContainer {
-    private final AdventureProperties p;
-    private final Input i;
-    private final Resources r;
-    private final long w;
+    private final AdventureProperties adventureProperties;
+    private final Input input;
+    private final Resources resources;
+    private final long windowHandle;
 
-    public AdventureContainer(AdventureProperties p, Input i, Resources r, long w){
-        this.p = p;
-        this.i = i;
-        this.r = r;
-        this.w = w;
+    public AdventureContainer(AdventureProperties p, Input input, Resources r, long w){
+        this.adventureProperties = p;
+        this.input = input;
+        this.resources = r;
+        this.windowHandle = w;
     }
 
     public AdventureProperties getProperties() {
-        return p;
+        return adventureProperties;
     }
 
     public Input getInput() {
-        return i;
+        return input;
     }
 
     public Resources getResources() {
-        return r;
+        return resources;
     }
 
     public long getWindow() {
-        return w;
+        return windowHandle;
     }
 
 }
